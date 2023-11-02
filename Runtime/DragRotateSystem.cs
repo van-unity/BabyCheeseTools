@@ -24,7 +24,7 @@ namespace Packages.com.babycheese.tools {
             if (_targets.Contains(target) || target == null) {
                 return;
             }
-
+            Debug.LogError("error");
             _targets.Add(target);
         }
 
