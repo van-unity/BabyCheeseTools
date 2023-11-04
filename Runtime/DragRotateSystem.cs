@@ -22,6 +22,7 @@ public class DragRotateSystem : MonoBehaviourSingleton<DragRotateSystem> {
         if (_targets.Contains(target) || target == null) {
             return;
         }
+
         _targets.Add(target);
     }
 
@@ -40,7 +41,7 @@ public class DragRotateSystem : MonoBehaviourSingleton<DragRotateSystem> {
     }
 
     private void Update() {
-        if (Input.GetMouseButtonDown(0)) {
+        if (Input.GetMouseButtonDown(0) && !Input.GetKey(KeyCode.LeftAlt) && !Input.GetKey(KeyCode.RightAlt)) {
             var ray = _camera.ScreenPointToRay(Input.mousePosition);
             if (Physics.Raycast(ray, out var hitInfo)) {
                 foreach (var target in _targets) {
@@ -62,16 +63,16 @@ public class DragRotateSystem : MonoBehaviourSingleton<DragRotateSystem> {
             _inertiaTimeRemaining = _inertiaDuration; // Start inertia
         }
 
-        if (_canDrag && Input.GetMouseButton(0)) {
-            var mouseDelta = _lastMousePos - Input.mousePosition;
+        if (_canDrag && Input.GetMouseButton(0) && !Input.GetKey(KeyCode.LeftAlt) && !Input.GetKey(KeyCode.RightAlt)) {
+            var mouseDelta = Input.mousePosition - _lastMousePos;
             mouseDelta = Vector3.ClampMagnitude(mouseDelta, _maxDragMagnitude);
             _lastMousePos = Input.mousePosition;
 
-            float yaw = mouseDelta.x;
-            float pitch = -mouseDelta.y;
+            float yaw = -mouseDelta.x;
+            float pitch = mouseDelta.y;
 
             // Apply the rotations to the target rotation
-            _targetRotation *= Quaternion.AngleAxis(yaw, _camera.transform.up);
+            _targetRotation *= Quaternion.AngleAxis(yaw, Vector3.up);
             _targetRotation *= Quaternion.AngleAxis(pitch, _currentTarget.Right);
             _rotationVelocity = new Vector3(pitch, yaw, 0);
         }
@@ -82,10 +83,10 @@ public class DragRotateSystem : MonoBehaviourSingleton<DragRotateSystem> {
             var deltaRotation = Vector3.Lerp(_rotationVelocity, Vector3.zero, t);
             _targetRotation *= Quaternion.Euler(deltaRotation);
         }
-        else {
+        else if (_currentTarget) {
             _rotationVelocity = Vector3.zero;
             _removeTargetTimer += Time.deltaTime;
-            if (_removeTargetTimer >= _inertiaDuration) {
+            if (_removeTargetTimer >= _inertiaDuration / _inertiaSmoothing) {
                 _currentTarget = null;
             }
         }
@@ -94,7 +95,6 @@ public class DragRotateSystem : MonoBehaviourSingleton<DragRotateSystem> {
         if (_currentTarget) {
             var rotation = Quaternion.Slerp(_currentTarget.Rotation, _targetRotation,
                 Time.deltaTime * _rotationSmoothing);
-
             _currentTarget.SetRotation(rotation);
         }
     }

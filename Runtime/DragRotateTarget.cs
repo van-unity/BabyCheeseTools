@@ -1,3 +1,4 @@
+using System;
 using Extensions;
 using UnityEngine;
 
@@ -30,7 +31,7 @@ public class DragRotateTarget : MonoBehaviour {
     private void OnDisable() {
         DragRotateSystem.Instance.RemoveTarget(this);
     }
-
+    
     private void Reset() {
         if (!FindObjectOfType<DragRotateSystem>()) {
             var system = new GameObject("DragRotateSystem");
