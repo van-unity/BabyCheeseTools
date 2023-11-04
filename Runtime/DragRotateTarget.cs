@@ -3,7 +3,7 @@ using Extensions;
 using UnityEngine;
 
 public class DragRotateTarget : MonoBehaviour {
-    private BoxCollider _collider;
+    private Collider[] _collider;
     private Transform _transform;
 
     public Quaternion Rotation => _transform.rotation;
@@ -15,11 +15,17 @@ public class DragRotateTarget : MonoBehaviour {
     }
 
     public bool IsSelfCollider(Collider other) {
-        return other == _collider;
+        foreach (var col in _collider) {
+            if (other == col) {
+                return true;
+            }
+        }
+
+        return false;
     }
 
     private void Awake() {
-        _collider = GetComponent<BoxCollider>();
+        _collider = GetComponentsInChildren<Collider>();
         _transform = transform;
     }
 
@@ -31,7 +37,7 @@ public class DragRotateTarget : MonoBehaviour {
     private void OnDisable() {
         DragRotateSystem.Instance.RemoveTarget(this);
     }
-    
+
     private void Reset() {
         if (!FindObjectOfType<DragRotateSystem>()) {
             var system = new GameObject("DragRotateSystem");
