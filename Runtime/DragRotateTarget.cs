@@ -1,3 +1,4 @@
+using Extensions;
 using UnityEngine;
 
 public class DragRotateTarget : MonoBehaviour {
@@ -22,7 +23,8 @@ public class DragRotateTarget : MonoBehaviour {
     }
 
     private void OnEnable() {
-        DragRotateSystem.Instance.AddTarget(this);
+        //just to be sure that awake was called on DragRotateSystem
+        this.WaitForFramesAndExecute(3, () => { DragRotateSystem.Instance.AddTarget(this); });
     }
 
     private void OnDisable() {
