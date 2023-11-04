@@ -72,14 +72,9 @@ public class DragRotateSystem : MonoBehaviourSingleton<DragRotateSystem> {
             float pitch = mouseDelta.y;
 
             // Apply the rotations to the target rotation
-            if (Mathf.Abs(yaw) > Mathf.Abs(pitch)) {
-                _targetRotation *= Quaternion.AngleAxis(yaw, Vector3.up);
-                _rotationVelocity = new Vector3(0, yaw, 0);
-            }
-            else {
-                _targetRotation *= Quaternion.AngleAxis(pitch, Vector3.right);
-                _rotationVelocity = new Vector3(pitch, 0, 0);
-            }
+            _targetRotation *= Quaternion.AngleAxis(yaw, Vector3.up);
+            _targetRotation *= Quaternion.AngleAxis(pitch, Vector3.right);
+            _rotationVelocity = new Vector3(pitch, yaw, 0);
         }
         else if (_inertiaTimeRemaining > 0) {
             // Apply the inertia
