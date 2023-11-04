@@ -7,6 +7,7 @@ public abstract class MonoBehaviourSingleton<T> : MonoBehaviour
     protected virtual void Awake() {
         if (Instance == null) {
             Instance = this as T;
+            Debug.LogError("asas");
         }
         else {
             Destroy(gameObject);
