@@ -18,52 +18,7 @@ namespace Editor {
         }
 
         private Bounds CalculateMeshBounds(Transform transform) {
-            return CalculateOOBB(transform);
-        }
-
-
-        //calculating Object-Oriented Bounding Box to respect objects rotation 
-        private Bounds CalculateOOBB(Transform transform) {
-            // Start with an empty bounds object
-            Bounds bounds = new Bounds(Vector3.zero, Vector3.zero);
-            bool hasBounds = false;
-
-            // Get all MeshFilters in this object and its children
-            MeshFilter[] meshFilters = transform.GetComponentsInChildren<MeshFilter>();
-
-            foreach (MeshFilter meshFilter in meshFilters) {
-                if (hasBounds) {
-                    bounds.Encapsulate(CalculateLocalBounds(meshFilter));
-                }
-                else {
-                    bounds = CalculateLocalBounds(meshFilter);
-                    hasBounds = true;
-                }
-            }
-
-            return bounds;
-        }
-
-        private Bounds CalculateLocalBounds(MeshFilter meshFilter) {
-            Vector3[] vertices = meshFilter.sharedMesh.vertices;
-            if (vertices.Length == 0) return new Bounds();
-
-            // Transform vertices to local space
-            Transform transform = meshFilter.transform;
-            vertices = Array.ConvertAll(vertices, v => transform.TransformPoint(v));
-
-            // Calculate local bounds
-            Vector3 min = transform.InverseTransformPoint(vertices[0]);
-            Vector3 max = min;
-
-            foreach (Vector3 vertex in vertices) {
-                min = Vector3.Min(min, transform.InverseTransformPoint(vertex));
-                max = Vector3.Max(max, transform.InverseTransformPoint(vertex));
-            }
-
-            Bounds bounds = new Bounds();
-            bounds.SetMinMax(min, max);
-            return bounds;
+            return BoundsTools.CalculateOOBB(transform);
         }
 
 
@@ -169,10 +124,6 @@ namespace Editor {
         [MenuItem("BabyCheese/Tools/FitColliderToMesh")]
         public static void AdjustColliderMenuItem() {
             var target = Selection.activeGameObject;
-            if (!target) {
-                return;
-            }
-
             AdjustCollider(target);
         }
 
@@ -185,6 +136,13 @@ namespace Editor {
             else {
                 Debug.LogError($"Unsupported collider type: {collider.GetType()}");
             }
+        }
+
+        // Validate the MenuItem
+        [MenuItem("BabyCheese/Tools/FitColliderToMesh", true)]
+        static bool ValidateCreateCenteredGameObject() {
+            // The menu item will be disabled if no GameObject is selected.
+            return Selection.activeGameObject != null;
         }
     }
 }
