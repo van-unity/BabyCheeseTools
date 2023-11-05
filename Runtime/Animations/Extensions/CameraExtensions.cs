@@ -28,5 +28,14 @@ namespace Animations.Extensions {
 
             applyValue(1); // Ensure we set the background color to the target color at the end
         }
+
+        public static IEnumerator
+            AnimateFieldOfView(this Camera camera, float targetFOV, float duration, Easing easing) {
+            float startFOV = camera.fieldOfView;
+            var easingFunction = EasingFunctions.FunctionByEasing[easing];
+
+            return Iterator(duration, easingFunction,
+                (t) => { camera.fieldOfView = Mathf.Lerp(startFOV, targetFOV, t); });
+        }
     }
 }
