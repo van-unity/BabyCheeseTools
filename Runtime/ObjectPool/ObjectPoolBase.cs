@@ -9,6 +9,7 @@ namespace ObjectPool {
 
         private Transform _container;
         private IAssetRepository _repository;
+        private TObject _objectPrefab;
         private readonly Stack<TObject> _pool = new();
 
         public bool IsReady { get; private set; }
@@ -17,6 +18,7 @@ namespace ObjectPool {
             _repository = repository;
             _repository.LoadAsset<TObject>(GetAssetPath(), result => {
                 if (string.IsNullOrEmpty(result.Error)) {
+                    _objectPrefab = result.LoadedObject;
                     for (int i = 0; i < _initialSize; i++) {
                         _pool.Push(Create());
                     }
@@ -46,16 +48,21 @@ namespace ObjectPool {
             objectToReturn.OnDeSpawned();
         }
 
+        private TObject Create() {
+            var instantiatedItem = Instantiate(_objectPrefab, _container, false);
+            var component = instantiatedItem.GetComponent<TObject>();
+            component.Initialize();
+            return component;
+        }
+
         protected abstract object GetAssetPath();
-        protected abstract TObject Create();
-        protected abstract void ReleaseResources();
 
         private void Awake() {
             _container = new GameObject($"{typeof(TObject).Name}_Pool").transform;
         }
 
         private void OnDestroy() {
-            ReleaseResources();
+            _repository.Release(_objectPrefab);
             _pool.Clear();
         }
     }
