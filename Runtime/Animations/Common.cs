@@ -8,7 +8,7 @@ namespace Animations {
             float time = 0;
             var easingFunction = EasingFunctions.FunctionByEasing[easing];
 
-            while (time < duration) {
+            while (time <= duration) {
                 time += Time.deltaTime;
                 var t = easingFunction(time / duration);
                 callback.Invoke(t);
