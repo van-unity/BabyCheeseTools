@@ -9,14 +9,14 @@ namespace ObjectPool {
 
         private Transform _container;
         private IAssetRepository _repository;
-        private TObject _objectPrefab;
+        private GameObject _objectPrefab;
         private readonly Stack<TObject> _pool = new();
 
         public bool IsReady { get; private set; }
 
         public void Initialize(IAssetRepository repository) {
             _repository = repository;
-            _repository.LoadAsset<TObject>(GetAssetPath(), result => {
+            _repository.LoadAsset<GameObject>(GetAssetPath(), result => {
                 if (string.IsNullOrEmpty(result.Error)) {
                     _objectPrefab = result.LoadedObject;
                     for (int i = 0; i < _initialSize; i++) {
