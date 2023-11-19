@@ -74,7 +74,6 @@ public class DragRotateSystem : MonoBehaviourSingleton<DragRotateSystem> {
         if (_canDrag && Input.GetMouseButton(0) && !Input.GetKey(KeyCode.LeftAlt) && !Input.GetKey(KeyCode.RightAlt)) {
             var mouseDelta = Input.mousePosition - _lastMousePos;
             mouseDelta = Vector3.ClampMagnitude(mouseDelta, _maxDragMagnitude);
-            mouseDelta *= Time.deltaTime;
             _lastMousePos = Input.mousePosition;
 
             float yaw = -mouseDelta.x;
