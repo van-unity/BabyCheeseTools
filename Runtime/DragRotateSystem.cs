@@ -1,12 +1,20 @@
+using System;
 using System.Collections.Generic;
 using UnityEngine;
 
 public class DragRotateSystem : MonoBehaviourSingleton<DragRotateSystem> {
+    private enum RotationViewPoint {
+        Local,
+        World,
+        Camera
+    }
+
     [SerializeField] private float _rotationSmoothing = 5f;
     [SerializeField] private float _inertiaSmoothing = 5f;
     [SerializeField] private float _inertiaDuration = 2.0f;
     [SerializeField] private float _maxDragMagnitude = 15;
-
+    [SerializeField] private RotationViewPoint _yawViewPoint = RotationViewPoint.World;
+    [SerializeField] private RotationViewPoint _pitchViewPoint = RotationViewPoint.World;
     private Camera _camera;
     private bool _canDrag;
     private Vector3 _lastMousePos;
@@ -66,14 +74,15 @@ public class DragRotateSystem : MonoBehaviourSingleton<DragRotateSystem> {
         if (_canDrag && Input.GetMouseButton(0) && !Input.GetKey(KeyCode.LeftAlt) && !Input.GetKey(KeyCode.RightAlt)) {
             var mouseDelta = Input.mousePosition - _lastMousePos;
             mouseDelta = Vector3.ClampMagnitude(mouseDelta, _maxDragMagnitude);
+            mouseDelta *= Time.deltaTime;
             _lastMousePos = Input.mousePosition;
 
             float yaw = -mouseDelta.x;
             float pitch = mouseDelta.y;
 
             // Apply the rotations to the target rotation
-            _targetRotation *= Quaternion.AngleAxis(yaw, Vector3.up);
-            _targetRotation *= Quaternion.AngleAxis(pitch, Vector3.right);
+            _targetRotation *= Quaternion.AngleAxis(yaw, GetViewPointYawAxis());
+            _targetRotation *= Quaternion.AngleAxis(pitch, GetViewPointPitchAxis());
             _rotationVelocity = new Vector3(pitch, yaw, 0);
         }
         else if (_inertiaTimeRemaining > 0) {
@@ -96,6 +105,30 @@ public class DragRotateSystem : MonoBehaviourSingleton<DragRotateSystem> {
             var rotation = Quaternion.Slerp(_currentTarget.Rotation, _targetRotation,
                 Time.deltaTime * _rotationSmoothing);
             _currentTarget.SetRotation(rotation);
+        }
+    }
+
+    private Vector3 GetViewPointYawAxis() {
+        switch (_yawViewPoint) {
+            case RotationViewPoint.Local:
+                return _currentTarget.Up;
+            default:
+            case RotationViewPoint.World:
+                return Vector3.up;
+            case RotationViewPoint.Camera:
+                return _camera.transform.up;
+        }
+    }
+
+    private Vector3 GetViewPointPitchAxis() {
+        switch (_yawViewPoint) {
+            case RotationViewPoint.Local:
+                return _currentTarget.Right;
+            default:
+            case RotationViewPoint.World:
+                return Vector3.right;
+            case RotationViewPoint.Camera:
+                return _camera.transform.right;
         }
     }
 }
