@@ -142,7 +142,7 @@ namespace Editor {
         [MenuItem("BabyCheese/Tools/FitColliderToMesh", true)]
         static bool ValidateCreateCenteredGameObject() {
             // The menu item will be disabled if no GameObject is selected.
-            return Selection.activeGameObject.GetComponent<Collider>() != null;
+            return Selection.activeGameObject && Selection.activeGameObject.GetComponent<Collider>() != null;
         }
     }
 }
