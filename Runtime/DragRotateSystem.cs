@@ -73,7 +73,7 @@ public class DragRotateSystem : MonoBehaviourSingleton<DragRotateSystem> {
 
             // Apply the rotations to the target rotation
             _targetRotation *= Quaternion.AngleAxis(yaw, _currentTarget.Up);
-            _targetRotation *= Quaternion.AngleAxis(pitch, _currentTarget.Right);
+            _targetRotation *= Quaternion.AngleAxis(pitch, _camera.transform.right);
             _rotationVelocity = new Vector3(pitch, yaw, 0);
         }
         else if (_inertiaTimeRemaining > 0) {
