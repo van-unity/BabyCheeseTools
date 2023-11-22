@@ -1,7 +1,7 @@
 using System;
 using UnityEngine;
 
-namespace Infrastructure {
+namespace BabyCheeseTools.Infrastructure {
     public class LoadAssetResult<TObject> {
         public TObject LoadedObject { get; }
         public string Error { get; }

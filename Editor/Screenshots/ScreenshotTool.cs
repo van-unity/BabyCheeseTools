@@ -1,7 +1,7 @@
 using UnityEditor;
 using UnityEngine;
 
-namespace Editor.Screenshots {
+namespace BabyCheeseTools.Editor.Screenshots {
     public static class ScreenshotTool {
         [MenuItem("BabyCheese/Tools/Take Screenshot")]
         private static void TakeScreenshot() {

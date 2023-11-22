@@ -1,4 +1,4 @@
-namespace ObjectPool {
+namespace BabyCheeseTools.ObjectPool {
     public interface ISpawnable {
         void Initialize();
         void OnSpawned();

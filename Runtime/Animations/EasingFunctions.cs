@@ -2,7 +2,7 @@ using System;
 using System.Collections.Generic;
 using UnityEngine;
 
-namespace Animations {
+namespace BabyCheeseTools.Animations {
     public enum Easing {
         InQuad = 0,
         OutQuad = 1,

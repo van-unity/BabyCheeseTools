@@ -1,6 +1,6 @@
 {
     "name": "com.babycheese.tools.editor",
-    "rootNamespace": "",
+    "rootNamespace": "BabyCheeseTools",
     "references": [
         "GUID:23631a0af802d46019f6f5669e2af562"
     ],

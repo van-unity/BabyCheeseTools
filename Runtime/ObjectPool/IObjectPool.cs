@@ -1,6 +1,6 @@
 using UnityEngine;
 
-namespace ObjectPool {
+namespace BabyCheeseTools.ObjectPool {
     public interface IObjectPool<T> where T : Component, ISpawnable {
         bool IsReady { get; }
         T Get();

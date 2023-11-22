@@ -1,8 +1,8 @@
 using System.Collections.Generic;
-using Infrastructure;
+using BabyCheeseTools.Infrastructure;
 using UnityEngine;
 
-namespace ObjectPool {
+namespace BabyCheeseTools.ObjectPool {
     public abstract class ObjectPoolBase<TObject> : MonoBehaviour, IObjectPool<TObject>
         where TObject : Component, ISpawnable {
         [SerializeField] private int _initialSize = 10;

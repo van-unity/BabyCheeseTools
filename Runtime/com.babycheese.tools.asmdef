@@ -1,3 +1,14 @@
 {
-	"name": "com.babycheese.tools"
+    "name": "com.babycheese.tools",
+    "rootNamespace": "BabyCheeseTools",
+    "references": [],
+    "includePlatforms": [],
+    "excludePlatforms": [],
+    "allowUnsafeCode": false,
+    "overrideReferences": false,
+    "precompiledReferences": [],
+    "autoReferenced": true,
+    "defineConstraints": [],
+    "versionDefines": [],
+    "noEngineReferences": false
 }

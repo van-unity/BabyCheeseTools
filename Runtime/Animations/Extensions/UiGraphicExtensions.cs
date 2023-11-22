@@ -3,7 +3,7 @@ using System.Collections;
 using UnityEngine;
 using UnityEngine.UI;
 
-namespace Animations.Extensions {
+namespace BabyCheeseTools.Animations.Extensions {
     namespace Animations.Extensions {
         public static class GraphicAnimationExtensions {
             public static IEnumerator AnimateGraphicColor(this Graphic graphic, Color to, float duration, Easing easing,

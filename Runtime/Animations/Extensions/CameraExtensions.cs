@@ -2,7 +2,7 @@ using System;
 using System.Collections;
 using UnityEngine;
 
-namespace Animations.Extensions {
+namespace BabyCheeseTools.Animations.Extensions {
     public static class CameraExtensions {
         public static IEnumerator AnimateBackgroundColor(this Camera camera, Color targetColor, float duration,
             Easing easing) {

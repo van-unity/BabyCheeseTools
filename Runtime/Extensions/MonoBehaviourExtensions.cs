@@ -3,7 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-namespace Extensions {
+namespace BabyCheeseTools.Extensions {
     public static class YieldInstructionsCache {
         private static readonly Dictionary<float, YieldInstruction> _yieldInstructionBySecond;
 

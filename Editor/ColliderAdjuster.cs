@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEditor;
 using UnityEngine;
 
-namespace Editor {
+namespace BabyCheeseTools.Editor {
     public abstract class ColliderAdjusterStrategyBase {
         public void AdjustCollider(GameObject target) {
             var transform = target.transform;

@@ -2,7 +2,7 @@ using System;
 using System.Collections;
 using UnityEngine;
 
-namespace Animations.Extensions {
+namespace BabyCheeseTools.Animations.Extensions {
     public static class MaterialAnimationExtensions {
         public static IEnumerator AnimateColor(this Material material, Color to, float duration, Easing easing,
             Action onComplete = null) {

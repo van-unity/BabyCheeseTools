@@ -3,7 +3,7 @@ using UnityEditor;
 using UnityEngine;
 using UnityEngine.UIElements;
 
-namespace Editor.CustomInspectors {
+namespace BabyCheeseTools.Editor.CustomInspectors {
     [CustomEditor(typeof(DragRotateTarget))]
     public class DragRotateTargetInspector : UnityEditor.Editor {
         private enum ColliderType {

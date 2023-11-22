@@ -1,7 +1,6 @@
-using System;
 using UnityEngine;
 
-namespace Editor {
+namespace BabyCheeseTools.Editor {
     public static class BoundsTools {
         //calculating Object-Oriented Bounding Box to respect objects rotation 
         public static Bounds CalculateOOBB(Transform transform) {

@@ -2,7 +2,7 @@ using System;
 using System.Collections;
 using UnityEngine;
 
-namespace Animations {
+namespace BabyCheeseTools.Animations {
     public static class Common {
         public static IEnumerator Iterator(float duration, Easing easing, Action<float> callback, Action onComplete) {
             float time = 0;
