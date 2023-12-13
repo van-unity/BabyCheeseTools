@@ -1,0 +1,35 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5a5102e144584b9db90cb0e57cc655c7, type: 3}
+  m_Name: ColorLibrary
+  m_EditorClassIdentifier: 
+  _colors:
+  - name: Arsenic Gray
+    color: {r: 0.23137255, g: 0.26666668, b: 0.29411766, a: 1}
+  - name: Battleship Gray
+    color: {r: 0.5176471, g: 0.5176471, b: 0.50980395, a: 1}
+  - name: Black Coral
+    color: {r: 0.32941177, g: 0.38431373, b: 0.43529412, a: 1}
+  - name: Carbon Gray
+    color: {r: 0.38431373, g: 0.3647059, b: 0.3647059, a: 1}
+  - name: Charocal
+    color: {r: 0.21176471, g: 0.27058825, b: 0.30980393, a: 1}
+  - name: Deep Space Sparkle
+    color: {r: 0.2901961, g: 0.39215687, b: 0.42352942, a: 1}
+  - name: Gunmetall
+    color: {r: 0.16470589, g: 0.20392157, b: 0.22352941, a: 1}
+  - name: Rhythm
+    color: {r: 0.46666667, g: 0.4627451, b: 0.5882353, a: 1}
+  - name: Pure Silver
+    color: {r: 0.7647059, g: 0.78039217, b: 0.78039217, a: 1}
+  - name: Dark Charocal
+    color: {r: 0.2, g: 0.2, b: 0.2, a: 1}

@@ -10,9 +10,11 @@ namespace BabyCheeseTools {
         }
 
         [SerializeField] private float _rotationSmoothing = 5f;
+        [SerializeField] private float _dragSpeed = 15f;
         [SerializeField] private float _inertiaSmoothing = 5f;
         [SerializeField] private float _inertiaDuration = 2.0f;
         [SerializeField] private float _maxDragMagnitude = 15;
+        [SerializeField] private float _minMagnitude = .1f;
         [SerializeField] private RotationViewPoint _yawViewPoint = RotationViewPoint.World;
         [SerializeField] private RotationViewPoint _pitchViewPoint = RotationViewPoint.World;
         private Camera _camera;
@@ -71,23 +73,31 @@ namespace BabyCheeseTools {
                 _inertiaTimeRemaining = _inertiaDuration; // Start inertia
             }
 
-            if (_canDrag && Input.GetMouseButton(0) && !Input.GetKey(KeyCode.LeftAlt) && !Input.GetKey(KeyCode.RightAlt)) {
-                var mouseDelta = Input.mousePosition - _lastMousePos;
-                mouseDelta = Vector3.ClampMagnitude(mouseDelta, _maxDragMagnitude);
-                _lastMousePos = Input.mousePosition;
+            if (_canDrag && Input.GetMouseButton(0) && !Input.GetKey(KeyCode.LeftAlt) &&
+                !Input.GetKey(KeyCode.RightAlt)) {
+                var mouseDelta = (Input.mousePosition - _lastMousePos) * (Time.deltaTime * _dragSpeed);
+                var magnitude = mouseDelta.magnitude;
+                if (magnitude > _minMagnitude) {
+                    mouseDelta = Vector3.ClampMagnitude(mouseDelta, _maxDragMagnitude);
 
-                float yaw = -mouseDelta.x;
-                float pitch = mouseDelta.y;
+                    float yaw = -mouseDelta.x;
+                    float pitch = -mouseDelta.y;
 
-                // Apply the rotations to the target rotation
-                if (Mathf.Abs(yaw) > Mathf.Abs(pitch)) {
-                    _targetRotation *= Quaternion.AngleAxis(yaw, GetViewPointYawAxis());
+                    // Apply the rotations to the target rotation
+                    if (Mathf.Abs(yaw) > Mathf.Abs(pitch)) {
+                        _targetRotation *= Quaternion.AngleAxis(yaw, GetViewPointYawAxis());
+                    }
+                    else {
+                        _targetRotation *= Quaternion.AngleAxis(pitch, GetViewPointPitchAxis());
+                    }
+
+                    _rotationVelocity = new Vector3(pitch, yaw, 0);
                 }
                 else {
-                    _targetRotation *= Quaternion.AngleAxis(pitch, GetViewPointPitchAxis());
+                    _rotationVelocity = Vector3.zero;
                 }
-
-                _rotationVelocity = new Vector3(pitch, yaw, 0);
+                
+                _lastMousePos = Input.mousePosition;
             }
             else if (_inertiaTimeRemaining > 0) {
                 // Apply the inertia
