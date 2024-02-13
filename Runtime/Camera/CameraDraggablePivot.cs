@@ -23,6 +23,12 @@ namespace BabyCheeseTools.Camera {
         private Vector2 _delta;
         private Coroutine _inertiaCoroutine;
         private Vector2 _lastPointerDelta;
+        private BoxCollider _collider;
+
+        public void SetEnabled(bool isEnabled) {
+            _collider.enabled = isEnabled;
+            enabled = isEnabled;
+        }
 
         public void OnBeginDrag(PointerEventData eventData) {
             _delta = Vector2.zero;
@@ -80,6 +86,10 @@ namespace BabyCheeseTools.Camera {
                     -delta.y
                 );
             }
+        }
+
+        private void Awake() {
+            _collider = GetComponent<BoxCollider>();
         }
     }
 }
