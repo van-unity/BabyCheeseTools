@@ -54,7 +54,7 @@ namespace BabyCheeseTools.Animations.Extensions {
             return Common.Iterator(duration, easing,
                 value => transform.localScale = Vector3.Lerp(currentScale, to, value), onComplete);
         }
-
+        
         // Helper method to find the shortest path for rotation if not using FastBeyond360 mode
         private static Vector3 OptimizeEuler(Vector3 targetEuler, Vector3 currentEuler) {
             Vector3 optimizedEuler = targetEuler;

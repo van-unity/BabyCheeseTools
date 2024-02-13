@@ -4,9 +4,10 @@ using UnityEngine;
 
 namespace BabyCheeseTools.Animations.Extensions {
     public static class CameraExtensions {
-        public static IEnumerator AnimateBackgroundColor(this Camera camera, Color targetColor, float duration,
+        public static IEnumerator AnimateBackgroundColor(this UnityEngine.Camera camera, Color targetColor,
+            float duration,
             Easing easing) {
-            Color startColor = camera.backgroundColor;
+            var startColor = camera.backgroundColor;
             var easingFunction = EasingFunctions.FunctionByEasing[easing];
 
             return Iterator(duration, easingFunction, (t) => {
@@ -17,7 +18,7 @@ namespace BabyCheeseTools.Animations.Extensions {
 
         private static IEnumerator Iterator(float duration, Func<float, float> easingFunction,
             Action<float> applyValue) {
-            float time = 0f;
+            var time = 0f;
             while (time < duration) {
                 time += Time.deltaTime;
                 float progress = time / duration;
@@ -30,8 +31,8 @@ namespace BabyCheeseTools.Animations.Extensions {
         }
 
         public static IEnumerator
-            AnimateFieldOfView(this Camera camera, float targetFOV, float duration, Easing easing) {
-            float startFOV = camera.fieldOfView;
+            AnimateFieldOfView(this UnityEngine.Camera camera, float targetFOV, float duration, Easing easing) {
+            var startFOV = camera.fieldOfView;
             var easingFunction = EasingFunctions.FunctionByEasing[easing];
 
             return Iterator(duration, easingFunction,

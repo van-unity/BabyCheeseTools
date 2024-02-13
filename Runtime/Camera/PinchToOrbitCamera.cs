@@ -1,9 +1,9 @@
 using UnityEngine;
 
-namespace BabyCheeseTools {
-    [RequireComponent(typeof(Camera))]
+namespace BabyCheeseTools.Camera {
+    [RequireComponent(typeof(UnityEngine.Camera))]
     public class PinchToOrbitCamera : MonoBehaviour {
-        private Camera _cam;
+        private UnityEngine.Camera _cam;
         [SerializeField] private float _rotationSpeed = 5;
         [SerializeField] private float _smoothTime = 7;
 
@@ -12,7 +12,7 @@ namespace BabyCheeseTools {
         private Vector3 _currentVelocity;
 
         void Awake() {
-            _cam = GetComponent<Camera>();
+            _cam = GetComponent<UnityEngine.Camera>();
         }
 
         void Update() {

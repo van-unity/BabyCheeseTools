@@ -1,7 +1,7 @@
 using UnityEngine;
 
-namespace BabyCheeseTools {
-    [RequireComponent(typeof(Camera))]
+namespace BabyCheeseTools.Camera {
+    [RequireComponent(typeof(UnityEngine.Camera))]
     public class CameraScrollZoom : MonoBehaviour {
         [SerializeField] private float _sensitivity = 10f; // How sensitive the zoom is to scroll wheel movement.
         [SerializeField] private float _minFOV = 15f; // The minimum FOV value.
@@ -9,13 +9,13 @@ namespace BabyCheeseTools {
         [SerializeField] private float _smoothness = 10f; // Smoothness of the zoom for lerping.
         [SerializeField] private float _pinchSensitivity = 0.1f; // Sensitivity for pinch zooming.
 
-        private Camera _camera;
+        private UnityEngine.Camera _camera;
         private float _targetFOV; // The target FOV to lerp towards.
         private float _initialPinchDistance;
         private bool _isPinching = false;
 
         private void Start() {
-            _camera = GetComponent<Camera>();
+            _camera = GetComponent<UnityEngine.Camera>();
             _targetFOV = _camera.fieldOfView;
         }
 
