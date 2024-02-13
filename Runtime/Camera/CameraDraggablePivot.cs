@@ -39,11 +39,11 @@ namespace BabyCheeseTools.Camera {
 
         public void OnDrag(PointerEventData eventData) {
             _delta = eventData.delta;
-            _delta *= Time.deltaTime * _dragSpeed;
-            var magnitude = _delta.magnitude;
-            if (magnitude > _maxDragMagnitude) {
-                _delta = Vector2.ClampMagnitude(_delta, _maxDragMagnitude);
-            }
+            _delta *= EasingFunctions.FunctionByEasing[Easing.OutQuad].Invoke(Time.deltaTime * _dragSpeed);
+            // var magnitude = _delta.magnitude;
+            // if (magnitude > _maxDragMagnitude) {
+            //     _delta = Vector2.ClampMagnitude(_delta, _maxDragMagnitude);
+            // }
 
             RotateBy(_delta);
         }
