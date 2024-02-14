@@ -14,6 +14,10 @@ namespace BabyCheeseTools.Camera {
         private float _initialPinchDistance;
         private bool _isPinching = false;
 
+        public void SetFieldOfView(float fieldOfView) {
+            _targetFOV = fieldOfView;
+        }
+        
         private void Start() {
             _camera = GetComponent<UnityEngine.Camera>();
             _targetFOV = _camera.fieldOfView;
