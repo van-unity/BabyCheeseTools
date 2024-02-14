@@ -12,22 +12,24 @@ namespace BabyCheeseTools.Camera {
             public float maxInertiaDuration = .75f;
             public float minInertiaDuration = .15f;
             public float minInertiaMagnitude = .1f;
-            public float maxInertiaMagnitude = 2;
+            public float maxInertiaMagnitude = 10;
             public Easing inertiaEasing = Easing.OutExpo;
         }
 
-        [SerializeField] private float _dragSpeed = 300;
-        [SerializeField] private float _maxDragMagnitude = 5;
+        [SerializeField] private float _dragSpeed = 10;
+        [SerializeField] private float _maxDragMagnitude = 15;
         [SerializeField] private InertiaData _inertiaData;
 
         private Vector2 _delta;
         private Coroutine _inertiaCoroutine;
         private Vector2 _lastPointerDelta;
         private BoxCollider _collider;
+        private Quaternion _rotation;
 
         public void SetEnabled(bool isEnabled) {
             _collider.enabled = isEnabled;
             enabled = isEnabled;
+            _rotation = transform.rotation;
         }
 
         public void OnBeginDrag(PointerEventData eventData) {
@@ -39,11 +41,10 @@ namespace BabyCheeseTools.Camera {
 
         public void OnDrag(PointerEventData eventData) {
             _delta = eventData.delta;
-            _delta *= EasingFunctions.FunctionByEasing[Easing.OutQuad].Invoke(Time.deltaTime * _dragSpeed);
-            // var magnitude = _delta.magnitude;
-            // if (magnitude > _maxDragMagnitude) {
-            //     _delta = Vector2.ClampMagnitude(_delta, _maxDragMagnitude);
-            // }
+            var magnitude = _delta.magnitude;
+            if (magnitude > _maxDragMagnitude) {
+                _delta = Vector2.ClampMagnitude(_delta, _maxDragMagnitude);
+            }
 
             RotateBy(_delta);
         }
@@ -76,20 +77,19 @@ namespace BabyCheeseTools.Camera {
 
         private void RotateBy(Vector2 delta) {
             if (Mathf.Abs(delta.x) > Mathf.Abs(delta.y)) {
-                transform.Rotate(
-                    Vector3.up,
-                    delta.x
-                );
+                _rotation *= Quaternion.Euler(Vector3.up * delta.x);
             } else {
-                transform.Rotate(
-                    Vector3.right,
-                    -delta.y
-                );
+                _rotation *= Quaternion.Euler(Vector3.right * -delta.y);
             }
+        }
+
+        private void Update() {
+            transform.rotation = Quaternion.Slerp(transform.rotation, _rotation, Time.deltaTime * _dragSpeed);
         }
 
         private void Awake() {
             _collider = GetComponent<BoxCollider>();
+            _rotation = transform.rotation;
         }
     }
 }
