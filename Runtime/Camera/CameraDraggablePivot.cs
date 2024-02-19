@@ -26,6 +26,9 @@ namespace BabyCheeseTools.Camera {
         private BoxCollider _collider;
         private Quaternion _rotation;
 
+        public event Action DragBegun;
+        public event Action DragEnded;
+
         public void SetEnabled(bool isEnabled) {
             _collider.enabled = isEnabled;
             enabled = isEnabled;
@@ -37,6 +40,8 @@ namespace BabyCheeseTools.Camera {
             if (_inertiaCoroutine != null) {
                 StopCoroutine(_inertiaCoroutine);
             }
+
+            DragBegun?.Invoke();
         }
 
         public void OnDrag(PointerEventData eventData) {
@@ -51,6 +56,8 @@ namespace BabyCheeseTools.Camera {
 
         public void OnEndDrag(PointerEventData eventData) {
             ApplyInertia();
+
+            DragEnded?.Invoke();
         }
 
         private void ApplyInertia() {
