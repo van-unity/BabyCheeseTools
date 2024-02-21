@@ -15,21 +15,34 @@ MonoBehaviour:
   _colors:
   - name: Arsenic Gray
     color: {r: 0.23137255, g: 0.26666668, b: 0.29411766, a: 1}
+    colorCode: '#3B444B'
   - name: Battleship Gray
     color: {r: 0.5176471, g: 0.5176471, b: 0.50980395, a: 1}
+    colorCode: '#848482'
   - name: Black Coral
     color: {r: 0.32941177, g: 0.38431373, b: 0.43529412, a: 1}
+    colorCode: '#54626F'
   - name: Carbon Gray
     color: {r: 0.38431373, g: 0.3647059, b: 0.3647059, a: 1}
+    colorCode: '#625D5D'
   - name: Charocal
     color: {r: 0.21176471, g: 0.27058825, b: 0.30980393, a: 1}
+    colorCode: '#36454F'
   - name: Deep Space Sparkle
     color: {r: 0.2901961, g: 0.39215687, b: 0.42352942, a: 1}
+    colorCode: '#4A646C'
   - name: Gunmetall
     color: {r: 0.16470589, g: 0.20392157, b: 0.22352941, a: 1}
+    colorCode: '#2A3439'
   - name: Rhythm
     color: {r: 0.46666667, g: 0.4627451, b: 0.5882353, a: 1}
+    colorCode: '#777696'
   - name: Pure Silver
     color: {r: 0.7647059, g: 0.78039217, b: 0.78039217, a: 1}
+    colorCode: '#C3C7C7'
   - name: Dark Charocal
     color: {r: 0.2, g: 0.2, b: 0.2, a: 1}
+    colorCode: '#333333'
+  - name: Off White
+    color: {r: 0.972549, g: 0.9411765, b: 0.8901961, a: 1}
+    colorCode: '#F8F0E3'
