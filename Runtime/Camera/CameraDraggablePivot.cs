@@ -19,12 +19,18 @@ namespace BabyCheeseTools.Camera {
         [SerializeField] private float _dragSpeed = 10;
         [SerializeField] private float _maxDragMagnitude = 15;
         [SerializeField] private InertiaData _inertiaData;
-
+        [SerializeField] private float _dragResetDelay = .5f;
+        [SerializeField] private float _positionDragSensitivity = 1;
+        [SerializeField] private Transform _cameraTransform;
         private Vector2 _delta;
         private Coroutine _inertiaCoroutine;
         private Vector2 _lastPointerDelta;
         private BoxCollider _collider;
         private Quaternion _rotation;
+        private float _lastDragTime;
+        private Vector3 _lastMousePos;
+
+        private bool _canRotate = true;
 
         public event Action DragBegun;
         public event Action DragEnded;
@@ -36,6 +42,10 @@ namespace BabyCheeseTools.Camera {
         }
 
         public void OnBeginDrag(PointerEventData eventData) {
+            if (!_canRotate) {
+                return;
+            }
+
             _delta = Vector2.zero;
             if (_inertiaCoroutine != null) {
                 StopCoroutine(_inertiaCoroutine);
@@ -45,6 +55,10 @@ namespace BabyCheeseTools.Camera {
         }
 
         public void OnDrag(PointerEventData eventData) {
+            if (!_canRotate) {
+                return;
+            }
+
             _delta = eventData.delta;
             var magnitude = _delta.magnitude;
             if (magnitude > _maxDragMagnitude) {
@@ -55,7 +69,9 @@ namespace BabyCheeseTools.Camera {
         }
 
         public void OnEndDrag(PointerEventData eventData) {
-            ApplyInertia();
+            if (Time.time - _lastDragTime < _dragResetDelay) {
+                ApplyInertia();
+            }
 
             DragEnded?.Invoke();
         }
@@ -91,6 +107,35 @@ namespace BabyCheeseTools.Camera {
         }
 
         private void Update() {
+            if (Input.GetMouseButtonDown(0)) {
+                _lastMousePos = Input.mousePosition;
+            }
+
+            if (Input.GetKeyDown(KeyCode.LeftAlt)) {
+                _canRotate = false;
+            }
+
+            if (Input.GetKeyUp(KeyCode.LeftAlt)) {
+                _canRotate = true;
+            }
+
+            if (Input.GetKey(KeyCode.LeftAlt) && Input.GetMouseButton(0)) {
+                var mousePos = Input.mousePosition;
+                var delta = mousePos - _lastMousePos;
+
+// Assuming _cameraTransform is your camera's transform
+// Convert screen delta to world space direction
+                Vector3 worldDelta = _cameraTransform.TransformDirection(new Vector3(delta.x, delta.y, 0));
+
+// Scale the movement by sensitivity and deltaTime
+                worldDelta *= (_positionDragSensitivity * Time.deltaTime);
+
+                _lastMousePos = mousePos;
+
+// Apply the movement
+                _cameraTransform.position -= worldDelta;
+            }
+
             transform.rotation = Quaternion.Slerp(transform.rotation, _rotation, Time.deltaTime * _dragSpeed);
         }
 
