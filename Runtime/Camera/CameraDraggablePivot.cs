@@ -113,6 +113,7 @@ namespace BabyCheeseTools.Camera {
 
             if (Input.GetKeyDown(KeyCode.LeftAlt)) {
                 _canRotate = false;
+                _lastMousePos = Input.mousePosition;
             }
 
             if (Input.GetKeyUp(KeyCode.LeftAlt)) {
