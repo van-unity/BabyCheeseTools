@@ -123,17 +123,9 @@ namespace BabyCheeseTools.Camera {
             if (Input.GetKey(KeyCode.LeftAlt) && Input.GetMouseButton(0)) {
                 var mousePos = Input.mousePosition;
                 var delta = mousePos - _lastMousePos;
-
-// Assuming _cameraTransform is your camera's transform
-// Convert screen delta to world space direction
                 Vector3 worldDelta = _cameraTransform.TransformDirection(new Vector3(delta.x, delta.y, 0));
-
-// Scale the movement by sensitivity and deltaTime
                 worldDelta *= (_positionDragSensitivity * Time.deltaTime);
-
                 _lastMousePos = mousePos;
-
-// Apply the movement
                 _cameraTransform.position -= worldDelta;
             }
 
