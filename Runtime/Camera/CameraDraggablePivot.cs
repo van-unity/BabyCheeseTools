@@ -41,6 +41,10 @@ namespace BabyCheeseTools.Camera {
             _rotation = transform.rotation;
         }
 
+        public void SetRotation(Quaternion rotation) {
+            _rotation = rotation;
+        }
+        
         public void OnBeginDrag(PointerEventData eventData) {
             if (!_canRotate) {
                 return;
