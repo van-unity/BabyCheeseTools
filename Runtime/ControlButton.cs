@@ -20,7 +20,7 @@ namespace BabyCheeseTools {
 
         public void Hide() {
             _collider.enabled = false;
-            _particle.Stop(true, ParticleSystemStopBehavior.StopEmittingAndClear);
+            _particle.Stop(true, ParticleSystemStopBehavior.StopEmitting);
         }
 
         public void OnPointerClick(PointerEventData eventData) {
