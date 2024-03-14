@@ -1,8 +1,9 @@
 using System;
 using UnityEngine;
+using Object = UnityEngine.Object;
 
 namespace BabyCheeseTools.Infrastructure {
-    public class LoadAssetResult<TObject> {
+    public class LoadAssetResult<TObject> where TObject : Object {
         public TObject LoadedObject { get; }
         public string Error { get; }
 
@@ -13,7 +14,7 @@ namespace BabyCheeseTools.Infrastructure {
     }
 
     public interface IAssetRepository {
-        void LoadAsset<TObject>(object key, Action<LoadAssetResult<TObject>> callback);
+        void LoadAsset<TObject>(object key, Action<LoadAssetResult<TObject>> callback) where TObject : Object;
         void Release(object key);
         bool ReleaseInstance(GameObject gameObject);
     }
