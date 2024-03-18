@@ -41,7 +41,8 @@ namespace BabyCheeseTools.Animations {
                 { Easing.InOutSine, InOutSine },
                 { Easing.InElastic, InElastic },
                 { Easing.OutElastic, OutElastic },
-                { Easing.InOutElastic, InOutElastic }
+                { Easing.InOutElastic, InOutElastic },
+                { Easing.Linear, Linear }
             };
         }
 
