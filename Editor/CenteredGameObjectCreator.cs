@@ -91,7 +91,7 @@ namespace BabyCheeseTools.Editor {
             return Selection.activeGameObject != null;
         }
 
-        [MenuItem("GameObject/Duplicate Without Parent", false,
+        [MenuItem("BabyCheese/Tools/Duplicate Without Parent", false,
             0)] 
         static void DuplicateAsNoParent() {
             if (Selection.activeGameObject != null) // Check if an object is selected
