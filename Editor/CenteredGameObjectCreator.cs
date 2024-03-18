@@ -90,5 +90,20 @@ namespace BabyCheeseTools.Editor {
             // The menu item will be disabled if no GameObject is selected.
             return Selection.activeGameObject != null;
         }
+
+        [MenuItem("GameObject/Duplicate Without Parent", false,
+            0)] 
+        static void DuplicateAsNoParent() {
+            if (Selection.activeGameObject != null) // Check if an object is selected
+            {
+                GameObject original = Selection.activeGameObject;
+                GameObject duplicate = Object.Instantiate(original); // Duplicate the object
+                duplicate.name = original.name; // Optional: Remove "(Clone)" from the name
+                duplicate.transform.SetParent(null); // Remove the parent reference
+                Selection.activeGameObject = duplicate; // Select the new object
+            } else {
+                Debug.LogWarning("No object selected to duplicate!");
+            }
+        }
     }
 }
