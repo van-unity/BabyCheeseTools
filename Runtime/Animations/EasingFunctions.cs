@@ -18,9 +18,10 @@ namespace BabyCheeseTools.Animations {
         InOutSine = 11,
         InElastic = 12,
         OutElastic = 13,
-        InOutElastic = 14
+        InOutElastic = 14,
+        Linear = 15
     }
-    
+
     public static class EasingFunctions {
         public static Dictionary<Easing, Func<float, float>> FunctionByEasing { get; }
 
@@ -126,6 +127,10 @@ namespace BabyCheeseTools.Animations {
                     : t < 0.5
                         ? -(Mathf.Pow(2, 20 * t - 10) * Mathf.Sin((20 * t - 11.125f) * c5)) / 2
                         : (Mathf.Pow(2, -20 * t + 10) * Mathf.Sin((20 * t - 11.125f) * c5)) / 2 + 1;
+        }
+
+        private static float Linear(float t) {
+            return t;
         }
     }
 }
